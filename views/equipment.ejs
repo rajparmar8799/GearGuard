@@ -1,4 +1,41 @@
 <%- include('layouts/main') %>
+
 <h1>Equipment</h1>
-<p>Equipment table coming next</p>
+
+<table class="data-table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Serial</th>
+      <th>Department</th>
+      <th>Location</th>
+      <th>Status</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% equipment.forEach(eq => { %>
+      <tr>
+        <td><%= eq.name %></td>
+        <td><%= eq.serial_number || '-' %></td>
+        <td><%= eq.department || '-' %></td>
+        <td><%= eq.location || '-' %></td>
+        <td>
+          <% if (eq.is_scrapped) { %>
+            <span class="badge danger">Scrapped</span>
+          <% } else { %>
+            <span class="badge success">Active</span>
+          <% } %>
+        </td>
+        <td>
+          <a href="/maintenance?equipment=<%= eq.id %>" class="link">
+            View Maintenance
+          </a>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+
 <%- include('layouts/footer') %>

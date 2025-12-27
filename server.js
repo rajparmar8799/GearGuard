@@ -3,11 +3,23 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 
-dotenv.config();
-
-const app = express();
+// ESM __dirname / __filename
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Force-load .env from project root
+dotenv.config({
+  path: path.join(__dirname, ".env")
+});
+
+// Debug check (temporary)
+console.log("ENV CHECK →", {
+  SUPABASE_URL: process.env.SUPABASE_URL,
+  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY ? "LOADED" : "MISSING"
+});
+
+const app = express();
+
 
 // Middleware
 app.use(express.json());
