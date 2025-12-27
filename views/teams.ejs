@@ -1,4 +1,29 @@
-<%- include('layouts/main') %>
-<h1>Teams</h1>
-<p>Maintenance teams</p>
-<%- include('layouts/footer') %>
+<%- include("layouts/main") %>
+
+<div class="page-header">
+  <h1>Maintenance Teams</h1>
+
+  <form method="POST" action="/teams/add" class="inline-form">
+    <input type="text" name="name" placeholder="Team name" required />
+    <button class="btn-primary">+ Add Team</button>
+  </form>
+</div>
+
+<div class="teams-grid">
+  <% teams.forEach(team => { %>
+    <div class="team-card">
+      <h3><%= team.name %></h3>
+      <p><%= team.team_members.length %> members</p>
+
+      <% team.team_members.forEach(m => { %>
+        <div class="member">
+          <span class="avatar"><%= m.users.name[0] %></span>
+          <div>
+            <strong><%= m.users.name %></strong>
+            <small><%= m.users.role %></small>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  <% }) %>
+</div>

@@ -1,11 +1,9 @@
 // Highlight active sidebar link
-document.addEventListener("DOMContentLoaded", () => {
-  const links = document.querySelectorAll(".sidebar nav a");
-  const currentPath = window.location.pathname;
+// Work Center Modal
+function openWorkCenterModal() {
+  document.getElementById("wc-modal")?.classList.remove("hidden");
+}
 
-  links.forEach(link => {
-    if (link.getAttribute("href") === currentPath) {
-      link.classList.add("active");
-    }
-  });
-});
+function closeWorkCenterModal() {
+  document.getElementById("wc-modal")?.classList.add("hidden");
+}

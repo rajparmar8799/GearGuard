@@ -1,4 +1,41 @@
-<%- include('layouts/main') %>
-<h1>Calendar</h1>
-<p>Maintenance scheduling coming next</p>
-<%- include('layouts/footer') %>
+<%- include("layouts/main") %>
+
+<%
+  const monthNames = [
+    "January","February","March","April","May","June",
+    "July","August","September","October","November","December"
+  ];
+%>
+
+<div class="calendar-header">
+  <h1><%= monthNames[month] %> <%= year %></h1>
+
+  <div class="calendar-legend">
+    <span class="legend-item preventive">Preventive</span>
+    <span class="legend-item corrective">Corrective</span>
+  </div>
+</div>
+
+
+<div class="calendar-grid">
+  <%
+    const daysInMonth = new Date(year, month + 1, 0).getDate();
+    const today = new Date().getDate();
+  %>
+
+  <% for (let d = 1; d <= daysInMonth; d++) { %>
+    <div class="calendar-cell <%= d === today ? 'today' : '' %>">
+      <span class="calendar-date"><%= d %></span>
+
+      <% jobs
+        .filter(j => new Date(j.scheduled_date).getDate() === d)
+        .forEach(j => { %>
+
+        <div class="calendar-job <%= j.request_type %>">
+          <%= j.subject %>
+        </div>
+
+      <% }) %>
+    </div>
+  <% } %>
+</div>

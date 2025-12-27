@@ -2,6 +2,8 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import calendarRoutes from "./routes/calendar.routes.js";
+
 
 // ESM __dirname / __filename
 const __filename = fileURLToPath(import.meta.url);
@@ -42,11 +44,8 @@ app.use("/maintenance", maintenanceRoutes);
 app.use("/equipment", equipmentRoutes);
 app.use("/teams", teamsRoutes);
 app.use("/workcenters", workcenterRoutes);
+app.use("/calendar", calendarRoutes);
 
-// Calendar placeholder
-app.get("/calendar", (req, res) => {
-  res.render("calendar", { title: "Calendar" });
-});
 
 // Server
 const PORT = process.env.PORT || 5000;

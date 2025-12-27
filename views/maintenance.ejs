@@ -1,6 +1,30 @@
-<%- include('layouts/main') %>
+<%- include("layouts/main") %>
 
 <h1>Maintenance</h1>
-<p>Kanban board coming next</p>
 
-<%- include('layouts/footer') %>
+<% if (requests.length === 0) { %>
+  <p class="empty">No maintenance requests yet.</p>
+<% } else { %>
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Subject</th>
+        <th>Status</th>
+        <th>Priority</th>
+        <th>Scheduled</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% requests.forEach(r => { %>
+        <tr>
+          <td><%= r.subject %></td>
+          <td><%= r.status %></td>
+          <td class="priority <%= r.priority %>">
+            <%= r.priority %>
+          </td>
+          <td><%= r.scheduled_date || "-" %></td>
+        </tr>
+      <% }) %>
+    </tbody>
+  </table>
+<% } %>

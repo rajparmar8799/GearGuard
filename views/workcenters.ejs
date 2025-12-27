@@ -1,4 +1,73 @@
-<%- include('layouts/main') %>
-<h1>Work Centers</h1>
-<p>Production work centers</p>
-<%- include('layouts/footer') %>
+<%- include("layouts/main") %>
+
+<div class="page-header-row">
+  <div>
+    <h1>Work Centers</h1>
+    <p class="subtitle">Manage production work centers</p>
+  </div>
+
+  <button class="primary-btn" onclick="openWorkCenterModal()">
+  + Add Work Center
+</button>
+
+</div>
+
+<div class="search-box">
+  <input type="text" placeholder="Search work centers..." />
+</div>
+
+<% if (workcenters.length === 0) { %>
+  <p class="empty">No work centers available.</p>
+<% } else { %>
+  <div class="workcenter-grid">
+    <% workcenters.forEach(wc => { %>
+      <div class="workcenter-card">
+        <div class="wc-header">
+          <div class="wc-title">
+            <h3><%= wc.name %></h3>
+            <span class="wc-code"><%= wc.code || "—" %></span>
+          </div>
+
+          <span class="status-pill <%= wc.is_active ? 'active' : 'inactive' %>">
+            <%= wc.is_active ? 'Active' : 'Inactive' %>
+          </span>
+        </div>
+
+        <div class="wc-meta">
+          <span class="label">Department</span>
+          <span class="value"><%= wc.department || "—" %></span>
+        </div>
+
+        <p class="wc-desc">
+          <%= wc.description || "No description provided." %>
+        </p>
+      </div>
+    <% }) %>
+  </div>
+<% } %>
+
+<!-- Add Work Center Modal -->
+<div id="wc-modal" class="modal hidden">
+  <div class="modal-card">
+    <h2>Add Work Center</h2>
+
+    <form method="POST" action="/workcenters/add">
+      <input required name="name" placeholder="Work Center Name" />
+      <input name="code" placeholder="Code (optional)" />
+      <input name="department" placeholder="Department" />
+      <textarea name="description" placeholder="Description"></textarea>
+
+      <label class="checkbox">
+        <input type="checkbox" name="is_active" checked />
+        Active
+      </label>
+
+    <div class="modal-actions">
+  <button type="button" onclick="closeWorkCenterModal()">Cancel</button>
+  <button type="submit" class="primary-btn">Add</button>
+</div>
+
+    </form>
+  </div>
+</div>
+
